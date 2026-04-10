@@ -21,19 +21,38 @@ navLinks.querySelectorAll('a').forEach(link => {
 });
 
 // ===== Active nav link on scroll =====
+// IntersectionObserver is more reliable than scroll-position math, especially
+// with scroll-margin-top and a fixed navbar in play.
 const sections = document.querySelectorAll('section[id]');
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY + 100;
-  sections.forEach(section => {
-    const top = section.offsetTop;
-    const height = section.offsetHeight;
-    const id = section.getAttribute('id');
-    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
-    if (link) {
-      link.classList.toggle('active', scrollY >= top && scrollY < top + height);
-    }
-  });
+const navLinkMap = new Map();
+sections.forEach(section => {
+  const link = document.querySelector(`.nav-links a[href="#${section.id}"]`);
+  if (link) navLinkMap.set(section, link);
 });
+
+const setActive = (section) => {
+  navLinkMap.forEach((link, sec) => {
+    link.classList.toggle('active', sec === section);
+  });
+};
+
+const navObserver = new IntersectionObserver(
+  entries => {
+    // Pick the entry whose top is closest to (and below) the navbar.
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => a.target.offsetTop - b.target.offsetTop);
+    if (visible.length) setActive(visible[0].target);
+  },
+  {
+    // 80px navbar offset on top, -60% on the bottom so a section becomes
+    // "active" as soon as its top crosses below the navbar.
+    rootMargin: '-80px 0px -60% 0px',
+    threshold: 0
+  }
+);
+
+sections.forEach(section => navObserver.observe(section));
 
 // ===== Reveal on scroll =====
 const revealElements = document.querySelectorAll(
