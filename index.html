@@ -71,7 +71,7 @@
   <!-- Hero Section -->
   <section class="hero" id="home">
     <div class="hero-bg">
-      <div class="hero-particles" id="particles"></div>
+      <canvas class="hero-canvas" id="heroCanvas"></canvas>
     </div>
     <div class="container hero-content">
       <p class="hero-greeting">Hello, I'm</p>
@@ -305,5 +305,50 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script type="module">
+    import TubesCursor from "https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js";
+
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) { /* nothing to do */ }
+    else {
+      // Per-theme tube and light palettes.
+      const THEME_PALETTES = {
+        'purple-dark':   { tubes: ['#6c63ff', '#b063ff', '#8a5cf6'], lights: ['#b063ff', '#6c63ff', '#ff6ad5', '#60aed5'] },
+        'purple-light':  { tubes: ['#7c3aed', '#a78bfa', '#c4b5fd'], lights: ['#a78bfa', '#7c3aed', '#ec4899', '#60a5fa'] },
+        'ocean-dark':    { tubes: ['#0ea5e9', '#06b6d4', '#38bdf8'], lights: ['#38bdf8', '#06b6d4', '#22d3ee', '#60a5fa'] },
+        'ocean-light':   { tubes: ['#0284c7', '#38bdf8', '#7dd3fc'], lights: ['#38bdf8', '#0284c7', '#22d3ee', '#818cf8'] },
+        'emerald-dark':  { tubes: ['#10b981', '#34d399', '#6ee7b7'], lights: ['#34d399', '#10b981', '#a3e635', '#22d3ee'] },
+        'emerald-light': { tubes: ['#059669', '#34d399', '#6ee7b7'], lights: ['#34d399', '#059669', '#a3e635', '#22d3ee'] },
+        'rose-dark':     { tubes: ['#f43f5e', '#fb7185', '#fda4af'], lights: ['#fb7185', '#f43f5e', '#f472b6', '#fbbf24'] },
+        'amber-dark':    { tubes: ['#f59e0b', '#fbbf24', '#fcd34d'], lights: ['#fbbf24', '#f59e0b', '#fb923c', '#f472b6'] }
+      };
+      const DEFAULT_PALETTE = THEME_PALETTES['purple-dark'];
+
+      const getPalette = () => {
+        const theme = document.documentElement.getAttribute('data-theme');
+        return THEME_PALETTES[theme] || DEFAULT_PALETTE;
+      };
+
+      const initial = getPalette();
+      const app = TubesCursor(canvas, {
+        tubes: {
+          colors: initial.tubes,
+          lights: { intensity: 350, colors: initial.lights }
+        }
+      });
+
+      const applyTheme = () => {
+        const p = getPalette();
+        app.tubes.setColors(p.tubes);
+        app.tubes.setLightsColors(p.lights);
+      };
+
+      // React to theme changes (the switcher updates <html data-theme>).
+      new MutationObserver(applyTheme).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+      });
+    }
+  </script>
 </body>
 </html>

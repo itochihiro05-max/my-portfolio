@@ -81,16 +81,18 @@ const statObserver = new IntersectionObserver(
 );
 statNumbers.forEach(el => statObserver.observe(el));
 
-// ===== Floating particles =====
+// ===== Floating particles (replaced by Tubes Cursor three.js canvas) =====
 const particlesContainer = document.getElementById('particles');
-for (let i = 0; i < 40; i++) {
-  const particle = document.createElement('div');
-  particle.classList.add('particle');
-  particle.style.left = Math.random() * 100 + '%';
-  particle.style.top = Math.random() * 100 + '%';
-  particle.style.animationDelay = Math.random() * 6 + 's';
-  particle.style.animationDuration = 4 + Math.random() * 4 + 's';
-  particlesContainer.appendChild(particle);
+if (particlesContainer) {
+  for (let i = 0; i < 40; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 6 + 's';
+    particle.style.animationDuration = 4 + Math.random() * 4 + 's';
+    particlesContainer.appendChild(particle);
+  }
 }
 
 // ===== Theme Switcher =====
