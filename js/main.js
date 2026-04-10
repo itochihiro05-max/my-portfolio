@@ -1,3 +1,15 @@
+// ===== Loading screen =====
+document.body.classList.add('is-loading');
+const hideLoader = () => {
+  const loader = document.getElementById('loader');
+  if (!loader || loader.classList.contains('is-hidden')) return;
+  loader.classList.add('is-hidden');
+  document.body.classList.remove('is-loading');
+};
+window.addEventListener('load', () => setTimeout(hideLoader, 400));
+// Safety net: never trap the user on the loader if an asset stalls.
+setTimeout(hideLoader, 6000);
+
 // ===== Navbar scroll effect =====
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
