@@ -132,15 +132,53 @@ function markActiveTheme(theme) {
   });
 }
 
+// ===== Squircle buttons =====
+const heroButtonsMount = document.getElementById('heroButtons');
+if (heroButtonsMount && window.createSquircleBtn) {
+  const viewWork = window.createSquircleBtn({ c: 'teal', l: 'View My Work', i: 'rocket_launch', h: 48 });
+  viewWork.addEventListener('click', () => {
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const getInTouch = window.createSquircleBtn({ c: 'purple', l: 'Get in Touch', i: 'mail', h: 48 });
+  getInTouch.addEventListener('click', () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  heroButtonsMount.appendChild(viewWork);
+  heroButtonsMount.appendChild(getInTouch);
+}
+
+const submitBtnMount = document.getElementById('submitBtnMount');
+const contactForm = document.getElementById('contactForm');
+
+const buildSubmitBtn = (variant = 'idle') => {
+  const cfg = variant === 'sent'
+    ? { c: 'green', l: 'Message Sent!', i: 'check_circle', h: 48, class: 'w-full block mt-4' }
+    : { c: 'blue', l: 'Send Message', i: 'send', h: 48, class: 'w-full block mt-4' };
+  const btn = window.createSquircleBtn(cfg);
+  if (variant === 'idle') {
+    btn.addEventListener('click', () => contactForm?.requestSubmit());
+  }
+  return btn;
+};
+
+if (submitBtnMount && contactForm && window.createSquircleBtn) {
+  submitBtnMount.appendChild(buildSubmitBtn('idle'));
+}
+
 // ===== Contact form =====
-document.getElementById('contactForm').addEventListener('submit', e => {
+contactForm?.addEventListener('submit', e => {
   e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = 'Message Sent!';
-  btn.style.background = 'linear-gradient(135deg, #43e97b, #38f9d7)';
+  if (submitBtnMount) {
+    submitBtnMount.innerHTML = '';
+    submitBtnMount.appendChild(buildSubmitBtn('sent'));
+  }
   setTimeout(() => {
-    btn.textContent = 'Send Message';
-    btn.style.background = '';
+    if (submitBtnMount) {
+      submitBtnMount.innerHTML = '';
+      submitBtnMount.appendChild(buildSubmitBtn('idle'));
+    }
     e.target.reset();
   }, 3000);
 });

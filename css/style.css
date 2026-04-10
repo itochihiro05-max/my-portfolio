@@ -7,6 +7,14 @@
   box-sizing: border-box;
 }
 
+/* ===== Squircle button utilities ===== */
+.inline-block { display: inline-block; }
+.no-select { user-select: none; -webkit-tap-highlight-color: transparent; }
+.cursor-pointer { cursor: pointer; }
+.w-full { width: 100%; }
+.block { display: block; }
+.mt-4 { margin-top: 1rem; }
+
 :root,
 [data-theme="emerald-light"] {
   --bg: #f0fdf6;

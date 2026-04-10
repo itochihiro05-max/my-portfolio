@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body>
   <!-- Navigation -->
@@ -80,10 +81,7 @@
       <p class="hero-description">
         I build scalable AI infrastructure and ML systems — from algorithm design to global production deployment.
       </p>
-      <div class="hero-buttons">
-        <a href="#projects" class="btn btn-primary">View My Work</a>
-        <a href="#contact" class="btn btn-outline">Get in Touch</a>
-      </div>
+      <div class="hero-buttons" id="heroButtons"></div>
     </div>
     <a href="#about" class="scroll-indicator" aria-label="Scroll down">
       <div class="mouse">
@@ -291,7 +289,7 @@
           <div class="form-group">
             <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <div id="submitBtnMount"></div>
         </form>
       </div>
     </div>
@@ -304,6 +302,7 @@
     </div>
   </footer>
 
+  <script src="js/squircle-btn.js"></script>
   <script src="js/main.js"></script>
   <script type="module">
     import TubesCursor from "https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js";
