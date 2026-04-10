@@ -133,17 +133,29 @@ function markActiveTheme(theme) {
 }
 
 // ===== Squircle buttons =====
+// Squircle buttons re-render their innerHTML on pointerdown, which prevents
+// the browser from synthesizing a click event. Listen for pointerup instead.
+const onTap = (el, fn) => {
+  el.addEventListener('pointerup', (e) => {
+    if (e.button !== 0) return;
+    fn(e);
+  });
+};
+
 const heroButtonsMount = document.getElementById('heroButtons');
 if (heroButtonsMount && window.createSquircleBtn) {
+  const goTo = (hash) => {
+    const target = document.querySelector(hash);
+    if (!target) return;
+    history.pushState(null, '', hash);
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const viewWork = window.createSquircleBtn({ c: 'teal', l: 'View My Work', i: 'rocket_launch', h: 48 });
-  viewWork.addEventListener('click', () => {
-    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-  });
+  onTap(viewWork, () => goTo('#projects'));
 
   const getInTouch = window.createSquircleBtn({ c: 'purple', l: 'Get in Touch', i: 'mail', h: 48 });
-  getInTouch.addEventListener('click', () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-  });
+  onTap(getInTouch, () => goTo('#contact'));
 
   heroButtonsMount.appendChild(viewWork);
   heroButtonsMount.appendChild(getInTouch);
@@ -158,7 +170,7 @@ const buildSubmitBtn = (variant = 'idle') => {
     : { c: 'blue', l: 'Send Message', i: 'send', h: 48, class: 'w-full block mt-4' };
   const btn = window.createSquircleBtn(cfg);
   if (variant === 'idle') {
-    btn.addEventListener('click', () => contactForm?.requestSubmit());
+    onTap(btn, () => contactForm?.requestSubmit());
   }
   return btn;
 };

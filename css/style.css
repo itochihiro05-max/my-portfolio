@@ -552,8 +552,13 @@ a:hover {
 }
 
 /* ===== Sections ===== */
+html {
+  scroll-behavior: smooth;
+}
+
 .section {
   padding: 100px 0;
+  scroll-margin-top: 80px;
 }
 
 .section-alt {
