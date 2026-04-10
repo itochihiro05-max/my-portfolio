@@ -587,21 +587,21 @@ a:hover {
   align-items: center;
 }
 
-.about-image-placeholder {
+.about-photo {
   width: 280px;
   height: 280px;
   border-radius: 20px;
-  background: var(--surface);
+  object-fit: cover;
   border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
+  box-shadow: 0 12px 40px var(--accent-glow);
+  display: block;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
-.about-image-placeholder svg {
-  width: 80px;
-  height: 80px;
+.about-photo:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 18px 50px var(--accent-glow);
 }
 
 .about-text p {
@@ -693,6 +693,25 @@ a:hover {
 }
 
 /* ===== Experience Timeline ===== */
+.timeline-group-title {
+  max-width: 820px;
+  margin: 0 auto 24px;
+  padding-left: 28px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.timeline + .timeline-group-title {
+  margin-top: 48px;
+}
+
+.timeline-card .timeline-role:last-child {
+  margin-bottom: 0;
+}
+
 .timeline {
   position: relative;
   max-width: 820px;
