@@ -76,7 +76,6 @@ body.is-loading {
 .block { display: block; }
 .mt-4 { margin-top: 1rem; }
 
-:root,
 [data-theme="emerald-light"] {
   --bg: #f0fdf6;
   --bg-alt: #dcfce7;
@@ -146,6 +145,7 @@ body.is-loading {
   --gradient: linear-gradient(135deg, #f43f5e, #fb7185);
 }
 
+:root,
 [data-theme="amber-dark"] {
   --bg: #0f0d0a;
   --bg-alt: #181510;
@@ -952,6 +952,14 @@ ul.timeline-desc li::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--gradient);
+}
+
+.project-icon {
+  width: 60px;
+  height: 60px;
+  stroke: #fff;
+  opacity: 0.9;
 }
 
 .project-overlay {

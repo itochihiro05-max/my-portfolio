@@ -132,7 +132,7 @@ const themeDropdown = document.getElementById('themeDropdown');
 const themeOptions = document.querySelectorAll('.theme-option');
 
 // Load saved theme
-const savedTheme = localStorage.getItem('portfolio-theme') || 'emerald-light';
+const savedTheme = localStorage.getItem('portfolio-theme') || 'amber-dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 markActiveTheme(savedTheme);
 
@@ -188,8 +188,12 @@ if (heroButtonsMount && window.createSquircleBtn) {
   const getInTouch = window.createSquircleBtn({ c: 'purple', l: 'Get in Touch', i: 'mail', h: 48 });
   onTap(getInTouch, () => goTo('#contact'));
 
+  const resumeBtn = window.createSquircleBtn({ c: 'amber', l: 'Resume', i: 'description', h: 48 });
+  onTap(resumeBtn, () => window.open('assets/Chihiro_Ito_Resume.pdf', '_blank', 'noopener'));
+
   heroButtonsMount.appendChild(viewWork);
   heroButtonsMount.appendChild(getInTouch);
+  heroButtonsMount.appendChild(resumeBtn);
 }
 
 const submitBtnMount = document.getElementById('submitBtnMount');
